@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nominate a Veteran - FPHOV</title>
+  <style>
+    /* Base Variables to Match FPHOV Site */
+    :root {
+      --fphov-blue: #001CFF; 
+      --fphov-dark: #1a1a1a;
+      --text-color: #333333;
+      --bg-color: #121212; /* Dark charcoal background */
+    }
+
+    body {
+      background-color: var(--bg-color);
+      font-family: Arial, sans-serif; /* Fallback, adjust if they use a specific font */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    /* Main Container */
+    .fphov-form-wrapper {
+      background-color: #ffffff;
+      padding: 40px 40px;
+      border-radius: 8px;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+      border-top: 6px solid var(--fphov-blue);
+    }
+
+    /* Header text */
+    .page-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .page-header h1 {
+      color: var(--fphov-blue);
+      margin: 0 0 10px 0;
+      text-transform: uppercase;
+    }
+    .page-header p {
+      color: #666;
+      margin: 0;
+    }
+
+    /* Form Styles */
+    .form-section-title {
+      color: var(--fphov-blue);
+      font-size: 1.3em;
+      font-weight: bold;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #eee;
+    }
+    .form-section-title:first-of-type { margin-top: 0; }
+
+    .form-row { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+    .form-col { flex: 1; min-width: 250px; }
+    .form-col.full-width { flex: 100%; }
+
+    label { display: block; margin-bottom: 5px; font-weight: 600; color: var(--text-color); font-size: 0.9em; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], textarea {
+      width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-family: inherit;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--fphov-blue); box-shadow: 0 0 5px rgba(0, 28, 255, 0.2); }
+    
+    .radio-group { display: flex; gap: 15px; align-items: center; margin-top: 8px; }
+    .radio-group label { font-weight: normal; display: inline-flex; align-items: center; gap: 5px; cursor: pointer;}
+
+    /* Submit Button */
+    .fphov-submit-btn {
+      background-color: var(--fphov-blue);
+      color: #ffffff;
+      font-size: 1.1em;
+      font-weight: bold;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: background-color 0.3s;
+      text-transform: uppercase;
+    }
+    .fphov-submit-btn:disabled { background-color: #999; cursor: not-allowed; }
+    .fphov-submit-btn:hover:not(:disabled) { background-color: #0015cc; }
+
+    /* Success & Error Messages */
+    #fphov-success-splash { display: none; text-align: center; padding: 40px 20px; }
+    #fphov-success-splash h2 { color: var(--fphov-blue); font-size: 2em; margin-bottom: 10px; }
+    #fphov-success-splash p { font-size: 1.1em; color: var(--text-color); margin-bottom: 30px; }
+    #form-error-msg { display: none; color: #d32f2f; background: #ffebee; padding: 10px; border-radius: 4px; margin-top: 15px; text-align: center; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="fphov-form-wrapper">
+    
+    <div class="page-header" id="form-header">
+      <h1>Nominate A Veteran</h1>
+      <p>Please fill out the information below to submit a nomination.</p>
+    </div>
+
+    <div id="fphov-form-container">
+      <form id="submit-to-google">
+        
+        <div class="form-section-title">Veteran Information</div>
+        <div class="form-row">
+          <div class="form-col"><label>Date</label><input type="date" name="nominationDate" required></div>
+          <div class="form-col"><label>Veteran Name</label><input type="text" name="veteranName" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-col full-width"><label>Street Address</label><input type="text" name="streetAddress" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-col full-width"><label>City, State Zip Code</label><input type="text" name="cityStateZip" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-col"><label>Contact Number</label><input type="tel" name="vetContactNumber" required></div>
+          <div class="form-col">
+            <label>Can we text this number?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="vetTextYesNo" value="YES" required> YES</label>
+              <label><input type="radio" name="vetTextYesNo" value="NO" required> NO</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col full-width"><label>Email</label><input type="email" name="vetEmail"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-col"><label>Branch of Service</label><input type="text" name="branchOfService" required></div>
+          <div class="form-col"><label>Dates of Service and/or Era</label><input type="text" name="datesOfService" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-col">
+            <label>Honorably Discharged?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="honorablyDischarged" value="YES" required> YES</label>
+              <label><input type="radio" name="honorablyDischarged" value="NO" required> NO</label>
+            </div>
+          </div>
+          <div class="form-col">
+            <label>Homeowner?</label>
+            <div class="radio-group">
+              <label><input type="radio" name="homeowner" value="YES" required> YES</label>
+              <label><input type="radio" name="homeowner" value="NO" required> NO</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-col full-width"><label>Additional Comments</label><textarea name="additionalComments" rows="4"></textarea></div>
+        </div>
+
+        <div class="form-section-title">Nominated By</div>
+        <div class="form-row">
+          <div class="form-col full-width"><label>Your Name</label><input type="text" name="nominatorName" required></div>
+        </div>
+        <div class="form-row">
+          <div class="form-col"><label>Your Contact Number</label><input type="tel" name="nominatorContactNumber" required></div>
+          <div class="form-col"><label>Your Email</label><input type="email" name="nominatorEmail" required></div>
+        </div>
+
+        <button type="submit" id="submit-btn" class="fphov-submit-btn">Submit Nomination</button>
+        <div id="form-error-msg"></div>
+      </form>
+    </div>
+
+    <div id="fphov-success-splash">
+      <h2>Nomination Received!</h2>
+      <p>Thank you. The nomination has been successfully submitted and verified by our system.</p>
+      <button id="nominateAnotherBtn" class="fphov-submit-btn">Nominate Another Veteran</button>
+      <br><br>
+      <a href="https://fphov.org/" style="color: #666; text-decoration: none; font-size: 0.9em;">&larr; Return to FPHOV.org</a>
+    </div>
+
+  </div>
+
+  <script>
+    // *** PASTE YOUR APPS SCRIPT URL HERE ***
+    const scriptURL = 'YOUR_APPS_SCRIPT_URL_HERE'; 
+
+    const formContainer = document.getElementById("fphov-form-container");
+    const formHeader = document.getElementById("form-header");
+    const form = document.getElementById("submit-to-google");
+    const submitBtn = document.getElementById("submit-btn");
+    const errorMsg = document.getElementById("form-error-msg");
+    const successSplash = document.getElementById("fphov-success-splash");
+    const resetBtn = document.getElementById("nominateAnotherBtn");
+
+    form.addEventListener('submit', e => {
+      e.preventDefault(); 
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Verifying & Submitting...";
+      errorMsg.style.display = "none";
+      
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          if (!response.ok) throw new Error('Network response was not ok');
+          return response.text(); 
+        })
+        .then(text => {
+          formContainer.style.display = "none";
+          formHeader.style.display = "none";
+          successSplash.style.display = "block";
+          form.reset(); 
+          submitBtn.innerText = "Submit Nomination";
+          submitBtn.disabled = false;
+          window.scrollTo(0,0);
+        })
+        .catch(error => {
+          errorMsg.style.display = "block";
+          errorMsg.innerText = "Error communicating with the server. Please try again.";
+          submitBtn.disabled = false;
+          submitBtn.innerText = "Submit Nomination";
+        });
+    });
+
+    resetBtn.onclick = function() {
+      successSplash.style.display = "none";
+      formHeader.style.display = "block";
+      formContainer.style.display = "block";
+      window.scrollTo(0,0); 
+    }
+  </script>
+</body>
+</html>
